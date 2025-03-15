@@ -1,88 +1,90 @@
 #include <iostream>
 
- using namespace std;
- typedef struct Node{
+using namespace std;
+
+typedef struct Node{
     string songName;
     Node *link;
- }Node;
+}Node;
 
- Node *createNode(string data){
+Node *createNode(string data){
     Node *newNode = new Node;
     newNode->songName = data;
     newNode->link = NULL;
-    
+
     return newNode;
- }
- 
- void traverse(Node *head){
+}
+
+void traverse(Node *head){
     Node *temp = new Node;
     temp = head;
 
-    cout << "My playlist" <<endl;
-    while(temp !=NULL){
+    cout << "My Playlist" <<endl;
+    while(temp != NULL){
         cout << temp->songName<< "->"<<endl;
         if(temp->link == NULL){
             cout << "NULL"<<endl;
         }
+        
         temp = temp->link;
-    
     }
-}
-Node *insertAtTheEnd(string data, Node *head){
+}        
+Node *insertAtEnd(string data, Node *head){
     if(head == NULL){
         Node *newNode = createNode(data);
         head = newNode;
-        cout << "A new node has been inserted at the end \n" <<endl;
+        cout << "A new node has been inserted at the end \n" << endl;
         return head;
     }
     Node *temp = new Node;
     temp = head;
-
+    
     while(temp->link != NULL){
         temp = temp->link;
-    }   
-    Node *NewNod = createNode(data);
-    temp->link =  new Node;
+    }
+    
+    Node *newNode = createNode(data);
+    temp->link = newNode;
 
-    cout << "a new node has been inserted at the end \n" << endl;
+    cout << "A new node has been inserted at the end \n" << endl;
     return head;
-}
- Node *InsertAtTheBeginning(string data, Node *head){
-    Node * newNode = createNode(data);
+}    
+
+Node *insertAtBeginning(string data, Node *head){
+    Node *newNode = createNode(data);
     newNode->link = head;
 
     head = newNode;
 
-    cout << "A new node has been inserted at the beginning \n" <<endl;
-
+    cout << "A new node has been inserted at the beginning \n" << endl;
     return head;
- }
+}
 
- string insertAfter(string after, string data, Node *head){
+string insertAfter(string after, string data, Node *head){
     Node *temp = new Node;
     temp = head;
-    
-    while(temp->songName.compare(after) != 0){
+
+    while(temp->songName.compare(after) !=0){
         if(temp == NULL){
-            return "No such song exist, please try again letter.";
+            return "No such song exist, please try again later.";
         }
 
-        temp = temp->link;
     }
     Node *newNode = createNode(data);
     newNode->link = temp->link;
     temp->link = newNode;
 
-    return "An new node has been added after" + after + "\n";
- }
+    return "An new node has been added after " + after + "\n";
+}
 
- string deleteAtEnd(Node *head){
-    if(head == NULL){
-        return "The head has been deleted \n";
+string deleteAtEnd(Node *head){
+    if(head ==NULL){
+        return "The linked list is empty \n";
     }
+
     if(head->link == NULL){
         delete head;
-        return "The head has beed deleted \n";
+        return "The head has been deleted /n";
     }
 
     Node *temp = new Node;
@@ -91,12 +93,13 @@ Node *insertAtTheEnd(string data, Node *head){
     while(temp->link->link != NULL){
         temp = temp->link;
     }
-    temp->link = NULL;
-    
-    return "A node has been deleted at the end \n";
- }
 
- Node *deleteFromBeginning(Node *head){
+    temp->link = NULL;
+
+    return "A node has been deleted at the end /n";
+}
+
+Node *deleteFromBeginning(Node *head){
     if(head == NULL){
         cout << "The liunked list is empty \n" <<endl;
         return NULL;
@@ -112,7 +115,6 @@ Node *insertAtTheEnd(string data, Node *head){
 
     return head;
  }
-
  Node *deleteFromGivenNode(string givenNode,Node *head) { 
     if(head == NULL) {
       cout << "The linked list is empty. \n" << endl; 
@@ -142,10 +144,38 @@ Node *insertAtTheEnd(string data, Node *head){
     return head;
 }
 
- int main(){
-    Node *head = createNode("Senctuary by joji");
+
+int main(){
+    Node *head = createNode("Sanctuary by joji");
+    head = insertAtEnd("rain rain go away by cocomelon", head);
+    insertAtEnd("marilag by dionela", head);
+    insertAtEnd("oeverboard by justin bieber", head);
+    insertAtEnd("latina by al james", head);
+
+    head = insertAtBeginning("gusto by zacktabuldo", head);
+    head = insertAtBeginning("Dilaw by maki", head);
+    head = insertAtBeginning("QC girls by  hev abi", head);
+    head = insertAtBeginning("rewrite by james arthur", head);
+
+    traverse(head);
+
+    string result = insertAfter("ere by juan carlos", "QC girls", head);
+    cout << result;
+
+    string result2 = insertAfter("blue by yung kai", "latina", head);
+    cout << result2;
+
+    string result3 = insertAfter("dyosa cover by maxie", "marilag", head);
+    cout << result3;
+
+    string END = deleteAtEnd(head);
+    cout << END << endl;
+    head = deleteFromBeginning(head);
+    head = deleteFromGivenNode ( "marlag", head);
+
+
     traverse(head);
  
- return 0;
 
- }
+    return 0;
+}
